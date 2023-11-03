@@ -48,11 +48,11 @@ li, a {
 }
 #mynavbar ul li:hover { border-bottom: 3px solid #005bac !important; }
 .sub2 li a:hover {color:#005bac !important; border-bottom: 1px solid #005bac; font-weight: bold; }
-.cate3 {background-color: #ededed; position:absolute; padding:16px 0 0 0; }
+.cate3 {background-color: #f5fafe !important; position:absolute; padding:16px 0 0 0; }
 .sub2 li a {font-size: 16px; line-height: 33px; text-align: center !important; }
 .sub2 {display: inline !important; float:left !important; width:132px !important;}
 .sub1 {display: inline !important; float:right !important;}
-.mainvisual {width: 100%;
+.mainvisual {width: 100%; z-index: -1 !important; position:relative !important;
     min-width: 1200px;
     max-width: 1920px;
     height: 450px;
@@ -76,17 +76,24 @@ li, a {
 .footer div div p {color:grey;}
 .sep {color:grey; margin:0 20px;}
 .mainicon {height: 100px;}
-.mainicon div {text-align: center; vertical-align: middle;}
+.mainicon div {text-align: center; vertical-align: middle; background-color: white;}
 .mainicon div a, .mainicon div a i {font-size: 18px; font-weight:bolder; line-height: 100px;}
-.mainicon div a i {font-size: 30px !important; margin-right: 20px !important; color:#bbbbbb !important;}
+.mainicon div a i, .mainicon div a span {font-size: 30px !important; margin-right: 20px !important; color:#005bac !important;}
 .mainicon div:hover, .mainicon div:hover a, .mainicon div:hover a i {background-color:#79ae00 ; color:white !important;}
 .dropdown-menu, .dropdown-item, .dropup, .dropdown-toggle { border-radius: 0 !important; width: 240px;}
 .dropdown-toggle {color:white !important; text-align: left !important; border: 1px solid white !important; height: 40px !important;}
 .dropdown-toggle::after {float: right !important; margin-top:10px !important;}
-.dropdown-item {font-weight: bold !important;}
-.dropdown-menu li {height:40px !important; line-height: 40px !important; border-bottom: 1px solid #dbdbdb;}
-.dropdown-menu {border:1xp solid grey !important; background-color: #ededed !important;}
+.dropdown-item {font-weight: 400 !important; height:34px !important; line-height:30px !important;}
+.dropdown-menu li { line-height: 36px !important; border-bottom: 1px solid grey; background-color: #ededed !important;}
+.dropdown-menu li:hover a {background-color: #005bac !important; color:white !important;}
+
 .bank {border:1px solid grey; padding:10px; text-align: center; width: 240px;}
 .dropup, .bank {float:right !important;}
 .bankL {border:1px solid #dbdbdb; padding:5px; text-align: center;}
 .bankL div {margin:10px 0;}
+#imgbox {position:relative; width: 30px;}
+#imgbox img {position:absolute; top:4px; left:-30px; width: 30px;}
+#imgbox img#img2 {display: none;}
+#clubb:hover img#img1 {display:none;}
+#clubb:hover img#img2 {display:block;}
+.bi {font-size: 60px !important; margin:0 60px !important;}

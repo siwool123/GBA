@@ -10,7 +10,7 @@
     <li><a href="">협회규정 <i class="fa fa-angle-right"></i></a></li>
 </ul>
 <div class="bankL mt-3">
-	<div>협회입금계좌 <img src="../images/bank_y.png" alt="농협" style="width:90px; margin-left:10px;" /> </div>
+	<div>협회입금계좌 <img src="../images/bank_y.png" alt="농협" style="width:90px;" /> </div>
 	<div style="font-size:18px; font-weight:bolder;">301-0336-4728-31</div>
 	<div>사)서울특별시강서구<br/>배드민턴협회</div>
 </div>
