@@ -27,14 +27,13 @@ public class MemberDAO extends JDBConnect {
 				dto.setPw(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
-				dto.setEmailok(rs.getString(5));
 				dto.setPhone(rs.getString(6));
 				dto.setAdd1(rs.getString(7));
 				dto.setAdd2(rs.getString(8));
 				dto.setAdd3(rs.getString(9));
 				dto.setRegidate(rs.getDate(10));
 				dto.setGrade(rs.getInt(11));
-				dto.setPoint(rs.getInt(12));;
+				dto.setBirth(rs.getString(12));
 			}else {
 				System.out.println("rs 에 정보가없습니다");
 			}
@@ -82,8 +81,8 @@ public class MemberDAO extends JDBConnect {
 		return dto;
 	}
 	
-	public int memberjoinDTO(MemberDTO dto) {
-		String sql = "INSERT INTO member VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 3, 0)";
+	public int join(MemberDTO dto) {
+		String sql = "INSERT INTO member VALUES (?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 3, ?)";
 		int affected = 0;
 		try {
 			psmt = con.prepareStatement(sql);
@@ -91,11 +90,11 @@ public class MemberDAO extends JDBConnect {
 			psmt.setString(2, dto.getPw());
 			psmt.setString(3, dto.getName());
 			psmt.setString(4, dto.getEmail());
-			psmt.setString(5, dto.getEmailok());
-			psmt.setString(6, dto.getPhone());
-			psmt.setString(7, dto.getAdd1());
-			psmt.setString(8, dto.getAdd2());
-			psmt.setString(9, dto.getAdd3());
+			psmt.setString(5, dto.getPhone());
+			psmt.setString(6, dto.getAdd1());
+			psmt.setString(7, dto.getAdd2());
+			psmt.setString(8, dto.getAdd3());
+			psmt.setString(9, dto.getBirth());
 			
 			affected = psmt.executeUpdate();
 
@@ -105,15 +104,16 @@ public class MemberDAO extends JDBConnect {
 		return affected;
 	}
 
-	public int checkId(String id) {
+	public int checkId(String uid) {
 		int result=0;
 		String sql = "SELECT * FROM member WHERE id=?";
 		try {
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, id);
+			psmt.setString(1, uid);
 			rs = psmt.executeQuery();
 			if (rs.next()) result=1;
 		} catch (Exception e) {
+			System.out.println("회원가입시 아이디 중복확인중 예외발생");
 			e.printStackTrace();
 		}
 		return result;
@@ -131,14 +131,13 @@ public class MemberDAO extends JDBConnect {
 				dto.setPw(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
-				dto.setEmailok(rs.getString(5));
-				dto.setPhone(rs.getString(6));
-				dto.setAdd1(rs.getString(7));
-				dto.setAdd2(rs.getString(8));
-				dto.setAdd3(rs.getString(9));
-				dto.setRegidate(rs.getDate(10));
-				dto.setGrade(rs.getInt(11));
-				dto.setPoint(rs.getInt(12));
+				dto.setPhone(rs.getString(5));
+				dto.setAdd1(rs.getString(6));
+				dto.setAdd2(rs.getString(7));
+				dto.setAdd3(rs.getString(8));
+				dto.setRegidate(rs.getDate(9));
+				dto.setGrade(rs.getInt(10));
+				dto.setBirth(rs.getString(11));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,17 +147,17 @@ public class MemberDAO extends JDBConnect {
 	
 	public int updateMember(MemberDTO dto) {
 		int result = 0;
-		String sql = "UPDATE member SET pw=?, name=?, email=?, emailok=?, phone=?, add1=?, add2=?, add3=? WHERE id=?";
+		String sql = "UPDATE member SET pw=?, name=?, email=?, phone=?, add1=?, add2=?, add3=?, birth=? WHERE id=?";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, dto.getPw());
 			psmt.setString(2, dto.getName());
 			psmt.setString(3, dto.getEmail());
-			psmt.setString(4, dto.getEmailok());
-			psmt.setString(5, dto.getPhone());
-			psmt.setString(6, dto.getAdd1());
-			psmt.setString(7, dto.getAdd2());
-			psmt.setString(8, dto.getAdd3());
+			psmt.setString(4, dto.getPhone());
+			psmt.setString(5, dto.getAdd1());
+			psmt.setString(6, dto.getAdd2());
+			psmt.setString(7, dto.getAdd3());
+			psmt.setString(8, dto.getBirth());
 			psmt.setString(9, dto.getId());
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
@@ -168,16 +167,15 @@ public class MemberDAO extends JDBConnect {
 		return result;
 	}
 	
-	public int updatePoint(String id, int point) {
-		int result = 0;
-		String sql = "UPDATE member SET point=point+? WHERE id=?";
+	public int dropout(String uid) {
+		int result=0;
+		String sql = "DELETE FROM member WHERE id=?";
 		try {
 			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, point);
-			psmt.setString(2, id);
+			psmt.setString(1, uid);
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("포인트 변경 중 예외발생");
+			System.out.println("회원탈퇴 중 예외발생");
 			e.printStackTrace();
 		}
 		return result;

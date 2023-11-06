@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,14 +22,20 @@
 <script src="../js/gba.js"></script>
 <link href="../css/gba.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body id="pageTop">
 <div class="border-top border-bottom" style="height: 36px; background-color:#005bac;">
         <div class="container topR">
             <ul id="topR">
-                <li class="btn3"><a href="openLoginPop();" data-toggle="modal"
-                        data-target="#myModal_login" id="isLogin">로그인</a></li>
-                <li class="btn3" title="회원가입"><a href="member_join.jsp">회원가입</a></li>
-                <li class="btn3 cc" title="사이트맵"><a href="">사이트맵</a></li>
+<% if (session.getAttribute("UserId") == null) { %>
+		<!-- 로그인전 -->
+                <li class="btn3"><a href="../member/login.jsp" >로그인</a></li>
+                <li class="btn3"><a href="../member/join1.jsp">회원가입</a></li>
+<% } else { %>
+		<!-- 로그인후 -->
+				<li class="btn3"><a href="../member/logout.jsp" >로그아웃</a></li>
+                <li class="btn3"><a href="../member/edit.jsp">정보변경</a></li>
+<% } %>
+                <li class="btn3 cc"><a href="../member/sitemap.jsp">사이트맵</a></li>
             </ul>
         </div>
     </div>
@@ -82,5 +89,6 @@
 	</div>
     </div>
     </div>
+   <a id="ptop" href="#pageTop" style="opacity:0.5 !important"><i class="bi bi-chevron-up"></i><br/>TOP</a>
 </body>
 </html>

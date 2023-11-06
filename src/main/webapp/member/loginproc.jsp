@@ -17,8 +17,8 @@ dao.close();
 System.out.println(dto.getId());
 
 if(dto.getId() != null){
-	if (idsave != null && idsave.equals("y")) CookieManager.makeCookie(response, "sua_loginId", userId, 86400);
-	else CookieManager.deleteCookie(response, "sua_loginId");
+	if (idsave != null && idsave.equals("y")) CookieManager.makeCookie(response, "savedId", userId, 86400);
+	else CookieManager.deleteCookie(response, "savedId");
 	session.setAttribute("UserId", dto.getId());
 	session.setAttribute("UserName", dto.getName());
 	JSFunction.alertLocation(dto.getName()+" 님, 로그인에 성공했습니다.", "../main/main.jsp", out);

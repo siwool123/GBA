@@ -1,3 +1,37 @@
+document.addEventListener('DOMContentLoaded', function () {
+    var swiper1 = new Swiper('.swiper-container', {
+        slidesPerView: 4, // 한 번에 보여지는 슬라이드 개수
+        spaceBetween: 10, // 슬라이드 사이의 간격 (픽셀)
+        navigation: {
+            nextEl: '.bi-chevron-right', // 다음 버튼 클래스명
+            prevEl: '.bi-chevron-left', // 이전 버튼 클래스명
+        },
+        autoplay: {
+        delay: 3000,
+        disableOnInteraction: false, // 사용자와의 상호작용이 있을 때 자동 이동 중지하지 않음
+    	},
+    	//speed:5000,
+    	loop: true, // 무한 루프 활성화
+    	loopAdditionalSlides: 1,
+    });
+    
+     var swiper2 = new Swiper('.swiper-container', {
+        slidesPerView: 4, // 한 번에 보여지는 슬라이드 개수
+        spaceBetween: 10, // 슬라이드 사이의 간격 (픽셀)
+        navigation: {
+            nextEl: '.photoright', // 다음 버튼 클래스명
+            prevEl: '.photoleft', // 이전 버튼 클래스명
+        },
+        autoplay: {
+        delay: 3000,
+        disableOnInteraction: false, // 사용자와의 상호작용이 있을 때 자동 이동 중지하지 않음
+    	},
+    	//speed:5000,
+    	loop: true, // 무한 루프 활성화
+    	loopAdditionalSlides: 1,
+    });
+});
+
 $(function () {
     // 메인메뉴 열기버튼
     $("#mynavbar ul li, .cate3").mouseover(function () {
@@ -31,12 +65,14 @@ $(function () {
         $("li.m6").css("border-bottom", "3px solid #005bac");
     });
     
-    // sticky 로고 버튼
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 200) $('#stickyLogo').show().css({ "position": "fixed" });
-        else $('#stickyLogo').hide();
-    });
-
+    // pageTop 버튼
+//    $(window).scroll(function () {
+//        if ($(this).scrollTop() > 200) $('#ptop').fadeIn();
+//        else $('#ptop').fadeOut();
+//    });
+//    $("#ptop").click(function() { 
+//		$('html, body').animate({ scrollTop : 0 }, 1000); // 속도 400 return false; 
+//	}); 
 
     // 약관동의 전부 선택
     $("#chkAll").click(function () {
@@ -309,4 +345,94 @@ function focusMove(x, y, z) {
     if (document.getElementById(x).value.length >= z) {
         document.getElementById(y).focus();
     }
+}
+function validate(frm){ 
+    if(!frm.agree1.checked || !frm.agree2.checked) {alert("이용약관과 개인정보취급방침에 동의해주세요."); return false;}
+}//가입시 체크 확인 
+
+//회원가입시 폼값인증
+function jvalidate(frm) {
+	if (frm.name.value == '') {
+        alert("이름을 입력해주세요.");
+        frm.name.focus(); return false;
+    }
+    var textColor = window.getComputedStyle(document.getElementById('idResult'), null).getPropertyValue("color");
+    if (textColor=='rgb(255, 0, 0)') {
+        alert('아이디가 적합하지 않습니다.'); frm.id.focus(); return false;
+    }
+    //패스워드 입력 확인
+    if (frm.pw1.value == '') {
+        alert("비밀번호를 입력해주세요."); frm.pw1.focus(); return false;
+    }
+    if (frm.pw1.value.length < 8 || frm.pw1.value.length > 12) {
+        alert("비밀번호는 8~12자 사이만 가능합니다.");
+        frm.pw1.focus(); return false;
+    }
+    if (frm.pw2.value == '') {
+        alert("비밀번호 확인을 위해 재입력해주세요."); frm.pw2.focus(); return false;
+    }
+    if(frm.birth.value=='') {
+		alert("생년월일을 입력해주세요."); frm.birth.focus(); return false;
+	}
+    if(frm.tel1.value==''||frm.tel2.value==''||frm.tel3.value=='') {
+		alert("전화번호를 입력해주세요."); frm.tel1.focus(); return false;
+	}
+	if(frm.email1.value==''||frm.email2.value=='') {
+		alert("이메일 주소를 입력해주세요."); frm.email1.focus(); return false;
+	}
+	if(frm.zip.value==''||frm.addr1.value==''||frm.addr2.value=='') {
+		alert("주소를 입력해주세요."); frm.zip.focus(); return false;
+	}
+}
+function inputEmail(frm) {
+    var choiceDomain = frm.email_domain.value;
+    if (choiceDomain == '') {
+        frm.email1.focus();
+    }
+    else if (choiceDomain == '직접입력') {
+        frm.email2.value = '';
+        frm.email2.readOnly = false;
+        frm.email2.focus();
+    }
+    else {
+        frm.email2.value = choiceDomain;
+        frm.email2.readOnly = true;
+    }
+}
+function focusMove(x, y, z) {
+    if (document.getElementById(x).value.length >= z) {
+        document.getElementById(y).focus();
+    }
+}
+$(function () {
+	$('input[name=pw2]').keyup(function () {
+        if ($(this).val()!=$("input[name=pw1]").val()) {
+			$("#pwResult").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+        }else $("#pwResult").text("비밀번호가 일치합니다.").css("color", "green");
+    });
+	$('input[name=id]').keyup(function(){
+		let params = {id:$('#id').val()}, id = $(this).val();
+		$.post('idcheck.jsp', params, function(resD){console.log('콜백데이터', resD);
+			if(resD==1) $('#idResult').html('이미 존재하는 아이디입니다.').css('color', 'red');
+			else if(resD==0 && id.length>7 && id.length<13 && isNaN(id.charAt(0))){
+				$('#idResult').html('사용 가능한 아이디 입니다.').css('color', 'green');
+			}else $('#idResult').html('아이디는 영문소문자로 시작하는 8~12자로 작성해주세요.').css('color', 'red');
+		});
+	});
+});
+
+//다음 주소 api
+function postOpen() {
+    new daum.Postcode({
+        oncomplete: function (data) {
+            console.log(data);
+            console.log(data.zonecode);
+            console.log(data.address);
+
+            let frm = document.registF;
+            frm.zip.value = data.zonecode;
+            frm.addr1.value = data.address;
+            frm.addr2.focus();
+        }
+    }).open();
 }

@@ -18,12 +18,14 @@
 		<div class="col-sm-2">
 			<%@ include file="../include/leftmenu_intro.jsp" %>
 		</div>
-		<div class="col-sm-10">
-			
+		<div class="col-sm-10 p-5 mt-3" style="padding-right:0 !important;">
+			<div style="border-bottom:1px solid black;padding-bottom:10px;"><b style="font-size:28px;">회장인사말</b> 
+				<span style="float:right !important;">
+				<i class="bi bi-house-door-fill" style="font-size:18px; color:#dddddd"></i> <span class="sep">></span>  협회소개 <span class="sep">></span> 회장인사말</span>
+			</div>
 		</div>
 	</div>
 </div>
-<%@ include file="../include/banner.jsp" %>
 <%@ include file="../include/footer.jsp" %>
 </body>
 </html>

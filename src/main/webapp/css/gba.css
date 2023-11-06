@@ -2,18 +2,19 @@
     font-family: "Roboto", "Noto Sans KR", "PingFang SC", "Apple SD Gothic Neo", "Microsoft YaHei UI", "Malgun Gothic", sans-serif;
 	font-size: 14px;
 }
-a, a:hover,
-a:active {
+a, a:hover, a:active {
     text-decoration: none;
+    color: black;
 }
 
 ul {
     list-style: none;
-    padding-left: 0;
+    padding: 0; margin:0; color: black;
 }
-
-button, input[type=button] {border:none; background-color:black; color:white; padding:4px 10px;}
-.active>.page-link, .page-link.active {background-color:black !important; border-color:black !important;}
+input {background-color: white;}
+.btnb {border:none; background-color:#4a4a4a; color:white; padding:7px 13px;}
+.btnw {border:1px solid #cecece; background-color:white; padding:7px 13px;}
+.active>.page-link, .page-link.active {background-color:grey !important; border-color:grey !important;}
 .fa-heart {color:gray; font-size:20px; margin:0 10px; cursor:pointer;}
 .fa-angle-left, .fa-angles-left, .fa-angle-right, .fa-angles-right {font-size: 18px;}
 
@@ -25,8 +26,9 @@ button, input[type=button] {border:none; background-color:black; color:white; pa
 li, a {
     list-style: none;
     text-decoration: none;
-    color: #3b3b3b;
 }
+#ptop {width: 60px; height: 60px; border-radius: 30px; background-color: black; opacity: 0.5 !important; color:white; z-index: 300;
+	text-align: center; display:scroll; position:fixed; bottom:30px; right:30px; padding: 9px; line-height: 15px; }
 .sticky-top {background-color: white;}
 #topR {
     display: inline; float:right;
@@ -48,7 +50,7 @@ li, a {
 }
 #mynavbar ul li:hover { border-bottom: 3px solid #005bac !important; }
 .sub2 li a:hover {color:#005bac !important; border-bottom: 1px solid #005bac; font-weight: bold; }
-.cate3 {background-color: #f5fafe !important; position:absolute; padding:16px 0 0 0; }
+.cate3 {background-color: #f5fafe !important; position:absolute; padding:16px 0 20px 0; }
 .sub2 li a {font-size: 16px; line-height: 33px; text-align: center !important; }
 .sub2 {display: inline !important; float:left !important; width:132px !important;}
 .sub1 {display: inline !important; float:right !important;}
@@ -68,7 +70,7 @@ li, a {
  .sticky-top {border-bottom: 1px solid #c6c6c6;}
 
 .lefttop {font-size: 28px; font-weight:bolder; color:white; background-color: #79ae00; text-align: center; height: 100px; line-height: 100px;}
- .leftmenu li a {font-size: 17px; width: 100%; font-weight: 400; } 
+ .leftmenu li a {font-size: 17px; width: 100%; font-weight: 600; } 
  .leftmenu li:hover, .leftmenu li:hover a, .leftmenu li:hover a i {background-color: #005bac; color: white;}
   .leftmenu li {padding: 18px 10px 18px 15px;}
 .leftmenu .fa-angle-right {float: right; font-size: 14px; line-height: 24px; color:grey; }
@@ -90,10 +92,28 @@ li, a {
 .bank {border:1px solid grey; padding:10px; text-align: center; width: 240px;}
 .dropup, .bank {float:right !important;}
 .bankL {border:1px solid #dbdbdb; padding:5px; text-align: center;}
-.bankL div {margin:10px 0;}
+.bankL div {margin:10px 0; font-weight: bold;}
 #imgbox {position:relative; width: 30px;}
 #imgbox img {position:absolute; top:4px; left:-30px; width: 30px;}
 #imgbox img#img2 {display: none;}
 #clubb:hover img#img1 {display:none;}
 #clubb:hover img#img2 {display:block;}
-.bi {font-size: 60px !important; margin:0 60px !important;}
+
+.subbanner .swiper-slide {width: 220px; height: 60px; border:1px solid #dddddd; text-align: center; line-height: 60px;}
+.swiper-wrapper {transition-timing-function: linear;}
+.leftmenu li {border-bottom: 1px solid #dddddd;}
+.photogal .swiper-slide .photo {width: 280px; height: 190px; border:1px solid #c1c1c1; }
+.photogal .swiper-slide .ptitle {width: 280px; height: 100px; margin-top:-1px; border:1px solid #c1c1c1; padding:20px; font-size:16px;}
+
+.nlist li {font-size:16px; font-weight:400; line-height: 40px;}
+.ldate {text-align: right; float:right !important; font-size:16px !important;}
+.login {border-bottom: 1px solid #d5d5d5; padding-left:10px ;}
+.login input {border: none; height: 50px; outline: none; }
+.login i {margin: 0 10px; color: grey; position: relative; top:5px;}
+input[type="checkbox"] {border-radius: 0 !important;}
+
+.userTable, .userTable3 {  border: none;  }
+.userTable:last-child tr td {line-height: 50px !important}
+.userTable td { padding: 15px; border-bottom: 1px solid #d6d6d6;}
+.userTit { background-color: #f7f7f7; font-weight: bold; padding-left: 20px; width: 25%;}
+.userVal { padding-left: 20px !important; width: 75%}

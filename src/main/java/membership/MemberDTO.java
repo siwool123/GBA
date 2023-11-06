@@ -7,15 +7,20 @@ public class MemberDTO {
 	private String pw;
 	private String name; 
 	private String email;
-	private String emailok;
 	private String phone;
 	private String add1;
 	private String add2;
 	private String add3;
 	private Date regidate;
+	private String birth;
 	private int grade;
-	private int point;
 	
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
+	}
 	public String getId() {
 		return id;
 	}
@@ -39,12 +44,6 @@ public class MemberDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public String getEmailok() {
-		return emailok;
-	}
-	public void setEmailok(String emailok) {
-		this.emailok = emailok;
 	}
 	public String getPhone() {
 		return phone;
@@ -82,11 +81,4 @@ public class MemberDTO {
 	public void setGrade(int grade) {
 		this.grade = grade;
 	}
-	public int getPoint() {
-		return point;
-	}
-	public void setPoint(int point) {
-		this.point = point;
-	}
-	
 }
