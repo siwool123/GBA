@@ -12,6 +12,10 @@ public class MemberDAO extends JDBConnect {
 	public MemberDAO(String driver, String url, String id, String pw) {
 		super(driver, url, id, pw);
 	}
+	
+	public MemberDAO() {
+		super();
+	}
 
 	public MemberDTO getMemberDTO(String uid, String upw) {
 		MemberDTO dto = new MemberDTO();
@@ -27,13 +31,13 @@ public class MemberDAO extends JDBConnect {
 				dto.setPw(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
+				dto.setBirth(rs.getString(5));
 				dto.setPhone(rs.getString(6));
 				dto.setAdd1(rs.getString(7));
 				dto.setAdd2(rs.getString(8));
 				dto.setAdd3(rs.getString(9));
 				dto.setRegidate(rs.getDate(10));
 				dto.setGrade(rs.getInt(11));
-				dto.setBirth(rs.getString(12));
 			}else {
 				System.out.println("rs 에 정보가없습니다");
 			}
@@ -82,7 +86,7 @@ public class MemberDAO extends JDBConnect {
 	}
 	
 	public int join(MemberDTO dto) {
-		String sql = "INSERT INTO member VALUES (?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, 3, ?)";
+		String sql = "INSERT INTO member (id, pw, name, email, birth, phone, add1, add2, add3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int affected = 0;
 		try {
 			psmt = con.prepareStatement(sql);
@@ -90,11 +94,11 @@ public class MemberDAO extends JDBConnect {
 			psmt.setString(2, dto.getPw());
 			psmt.setString(3, dto.getName());
 			psmt.setString(4, dto.getEmail());
-			psmt.setString(5, dto.getPhone());
-			psmt.setString(6, dto.getAdd1());
-			psmt.setString(7, dto.getAdd2());
-			psmt.setString(8, dto.getAdd3());
-			psmt.setString(9, dto.getBirth());
+			psmt.setString(5, dto.getBirth());
+			psmt.setString(6, dto.getPhone());
+			psmt.setString(7, dto.getAdd1());
+			psmt.setString(8, dto.getAdd2());
+			psmt.setString(9, dto.getAdd3());
 			
 			affected = psmt.executeUpdate();
 
@@ -104,16 +108,16 @@ public class MemberDAO extends JDBConnect {
 		return affected;
 	}
 
-	public int checkId(String uid) {
+	public int checkId(String id) {
 		int result=0;
 		String sql = "SELECT * FROM member WHERE id=?";
 		try {
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, uid);
+			psmt.setString(1, id);
 			rs = psmt.executeQuery();
 			if (rs.next()) result=1;
 		} catch (Exception e) {
-			System.out.println("회원가입시 아이디 중복확인중 예외발생");
+			System.out.println("회원가입시 아이디 중복확인중 예외발생"+result);
 			e.printStackTrace();
 		}
 		return result;
@@ -131,13 +135,13 @@ public class MemberDAO extends JDBConnect {
 				dto.setPw(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
-				dto.setPhone(rs.getString(5));
-				dto.setAdd1(rs.getString(6));
-				dto.setAdd2(rs.getString(7));
-				dto.setAdd3(rs.getString(8));
-				dto.setRegidate(rs.getDate(9));
-				dto.setGrade(rs.getInt(10));
-				dto.setBirth(rs.getString(11));
+				dto.setBirth(rs.getString(5));
+				dto.setPhone(rs.getString(6));
+				dto.setAdd1(rs.getString(7));
+				dto.setAdd2(rs.getString(8));
+				dto.setAdd3(rs.getString(9));
+				dto.setRegidate(rs.getDate(10));
+				dto.setGrade(rs.getInt(11));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -147,21 +151,21 @@ public class MemberDAO extends JDBConnect {
 	
 	public int updateMember(MemberDTO dto) {
 		int result = 0;
-		String sql = "UPDATE member SET pw=?, name=?, email=?, phone=?, add1=?, add2=?, add3=?, birth=? WHERE id=?";
+		String sql = "UPDATE member SET pw=?, name=?, email=?, birth=?, phone=?, add1=?, add2=?, add3=? WHERE id=?";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, dto.getPw());
 			psmt.setString(2, dto.getName());
 			psmt.setString(3, dto.getEmail());
-			psmt.setString(4, dto.getPhone());
-			psmt.setString(5, dto.getAdd1());
-			psmt.setString(6, dto.getAdd2());
-			psmt.setString(7, dto.getAdd3());
-			psmt.setString(8, dto.getBirth());
+			psmt.setString(4, dto.getBirth());
+			psmt.setString(5, dto.getPhone());
+			psmt.setString(6, dto.getAdd1());
+			psmt.setString(7, dto.getAdd2());
+			psmt.setString(8, dto.getAdd3());
 			psmt.setString(9, dto.getId());
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("회원정보 변경 중 예외발생");
+			System.out.println("회원정보 변경 중 예외발생"+dto.getPw());
 			e.printStackTrace();
 		}
 		return result;

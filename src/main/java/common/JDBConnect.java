@@ -18,10 +18,10 @@ public class JDBConnect {
 //기본생성자 : 매개변수가없는 생성자
 	public JDBConnect() {
 		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String id = "sua_project";
-			String pw = "1234";
+			Class.forName("com.mysql.jdbc.Driver");
+			String url = "jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12660522";
+			String id = "sql12660522";
+			String pw = "DL3qFc3kdE";
 			con = DriverManager.getConnection(url, id, pw);
 
 			System.out.println("DB 연결 성공 (기본생성자)");

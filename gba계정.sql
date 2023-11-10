@@ -18,3 +18,4 @@ alter table member drop column emailok;
 commit;
 alter table member add birth varchar(30);
 commit;
+select * from member where id='siwool123';

@@ -36,7 +36,7 @@
 
 	<div class="col-sm-6">
 		<nav>
-			<a href='./member/join1.jsp' >개인정보처리방침</a> <span class="sep">|</span>  <a href='' >이메일무단수집거부</a> <span class="sep">|</span> <a href='' >관리자페이지</a>
+			<a href='../member/privacy.jsp' >개인정보처리방침</a> <span class="sep">|</span>  <a href='../member/email.jsp' >이메일무단수집거부</a> <span class="sep">|</span> <a href='https://www.phpmyadmin.co/' >관리자페이지</a>
 		</nav><br/>
 		<p>사단법인서울특별시강서구배드민턴협회 <span style="margin:20px">대표자 : 유충구</span> 사업자등록번호 : 332-82-00510 <br/>
 		서울특별시 강서구 공항대로 227, 711호&nbsp;&nbsp;&nbsp; 전화 : 010-9352-3291<br/><br/>

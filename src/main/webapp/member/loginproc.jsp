@@ -11,7 +11,7 @@ String idsave = request.getParameter("idsave");
 
 System.out.println(userId+" : "+userPw);
 
-MemberDAO dao = new MemberDAO(application);
+MemberDAO dao = new MemberDAO();
 MemberDTO dto = dao.getMemberDTO(userId, userPw);
 dao.close();
 System.out.println(dto.getId());

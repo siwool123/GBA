@@ -62,7 +62,7 @@ function validateForm(fm) {
 						<input type="password" name="user_pw" value="" placeholder="비밀번호를 입력해주세요." />
 						</div>
 						<label style="line-height:50px; padding-left:10px;"> <input type="checkbox" name="idsave" value="y" <%= cookie %> style="margin:0 10px;" /> 아이디 저장</label>
-						<input type="submit" value="로그인" class="btnb" style="width:360px; height:47px;" />
+						<input type="submit" value="로그인" class="btnb" style="width:100%; height:47px;" />
 					</form>
 					
 				</div>

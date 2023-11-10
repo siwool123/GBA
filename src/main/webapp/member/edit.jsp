@@ -4,9 +4,10 @@
 <%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../member/IsLoggedIn.jsp" %>
 <% 
 String UserId = session.getAttribute("UserId").toString();
-MemberDAO dao = new MemberDAO(application);
+MemberDAO dao = new MemberDAO();
 MemberDTO dto = dao.viewMember(UserId);
 if(!UserId.equals(dto.getId())){JSFunction.alertBack("작성자 본인만 수정할수있습니다.", out); return;}
 dao.close();
@@ -26,97 +27,16 @@ input, select {border:1px solid #dddddd; height:30px; padding-left:10px; margin-
 .span1 {color:#b0b0b0;}
 .btnb:hover {color:white;}
 </style>
+<script>
+function deleteMember(fm) {
+	var password = prompt("회원탈퇴하려면 비밀번호를 입력하세요. (탈퇴후 30일간 재가입이 제한됩니다.)")
+    if (password !== null && password !== "") {
+        if(password !== <%= dto.getPw() %>){alert("비밀번호가 일치하지 않습니다."); return false;}
+    } else { alert("비밀번호를 입력해주세요."); return false;}
+}
+</script>
 </head>
-<script>
-//회원가입시 폼값인증
-function jvalidate(frm) {
-	if (frm.name.value == '') {
-        alert("이름을 입력해주세요.");
-        frm.name.focus(); return false;
-    }
-    var textColor1 = window.getComputedStyle(document.getElementById('idResult'), null).getPropertyValue("color");
-    var textColor2 = window.getComputedStyle(document.getElementById('pwResult'), null).getPropertyValue("color");
-    if (textColor1=='rgb(255, 0, 0)') {alert('아이디가 적합하지 않습니다.'); frm.id.focus(); return false;}
-    if (textColor2=='rgb(255, 0, 0)') {alert('비밀번호가 일치하지 않습니다.'); frm.pw2.focus(); return false;}
-    //패스워드 입력 확인
-    if (frm.pw1.value == '') {
-        alert("비밀번호를 입력해주세요."); frm.pw1.focus(); return false;
-    }
-    if (frm.pw1.value.length < 8 || frm.pw1.value.length > 12) {
-        alert("비밀번호는 8~12자 사이만 가능합니다.");
-        frm.pw1.focus(); return false;
-    }
-    if (frm.pw2.value == '') {
-        alert("비밀번호 확인을 위해 재입력해주세요."); frm.pw2.focus(); return false;
-    }
-    if(frm.birth.value=='') {
-		alert("생년월일을 입력해주세요."); frm.birth.focus(); return false;
-	}
-    if(frm.tel1.value==''||frm.tel2.value==''||frm.tel3.value=='') {
-		alert("전화번호를 입력해주세요."); frm.tel1.focus(); return false;
-	}
-	if(frm.email1.value==''||frm.email2.value=='') {
-		alert("이메일 주소를 입력해주세요."); frm.email1.focus(); return false;
-	}
-	if(frm.zip.value==''||frm.addr1.value==''||frm.addr2.value=='') {
-		alert("주소를 입력해주세요."); frm.zip.focus(); return false;
-	}
-}
-function inputEmail(frm) {
-    var choiceDomain = frm.email_domain.value;
-    if (choiceDomain == '') {
-        frm.email1.focus();
-    }
-    else if (choiceDomain == '직접입력') {
-        frm.email2.value = '';
-        frm.email2.readOnly = false;
-        frm.email2.focus();
-    }
-    else {
-        frm.email2.value = choiceDomain;
-        frm.email2.readOnly = true;
-    }
-}
-function focusMove(x, y, z) {
-    if (document.getElementById(x).value.length >= z) {
-        document.getElementById(y).focus();
-    }
-}
-$(function () {
-	$('input[name=pw2]').keyup(function () {
-        if ($(this).val()!=$("input[name=pw1]").val()) {
-			$("#pwResult").text("비밀번호가 일치하지 않습니다.").css("color", "red");
-        }else $("#pwResult").text("비밀번호가 일치합니다.").css("color", "green");
-    });
-	$('input[name=id]').keyup(function(){
-		let params = {id:$('#id').val()}, id = $(this).val();
-		$.post('idcheck.jsp', params, function(resD){console.log('콜백데이터', resD);
-			if(resD==1) $('#idResult').html('이미 존재하는 아이디입니다.').css('color', 'red');
-			else if(resD==0 && id.length>7 && id.length<13 && isNaN(id.charAt(0))){
-				$('#idResult').html('사용 가능한 아이디 입니다.').css('color', 'green');
-			}else $('#idResult').html('아이디는 영문소문자로 시작하는 8~12자로 작성해주세요.').css('color', 'red');
-		});
-	});
-});
-</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-//다음 주소 api
-function postOpen() {
-    new daum.Postcode({
-        oncomplete: function (data) {
-            console.log(data);
-            console.log(data.zonecode);
-            console.log(data.address);
-
-            let frm = document.registF;
-            frm.zip.value = data.zonecode;
-            frm.addr1.value = data.address;
-            frm.addr2.focus();
-        }
-    }).open();
-}
-</script>
  <body>
  <%@ include file="../include/header.jsp" %>
  <div class="container-fluid subvisual"></div>
@@ -131,39 +51,38 @@ function postOpen() {
 			<i class="bi bi-house-door-fill" style="font-size:18px; color:#dddddd"></i> <span class="sep">></span>멤버십<span class="sep">></span>회원정보변경</span>
 			</div>	
 			<p class="mt-5 mb-5" style="font-size:16px;">회원정보입력 : 회원님의 개인정보를 안전하게 보호하고 있으며, 회원님의 명백한 동의 없이는 공개 또는 제3자에게 제공되지 않습니다.</p>
-			<form name="registF" action="registAction.jsp" method="post" onsubmit="return jvalidate(this);">
+			<form name="editMemberF" action="editproc.jsp" method="post" onsubmit="return jvalidate(this);">
               <table class="userTable m-5">
                   <tr style="border-top: 2px solid grey;">
                       <td class="userTit" style="width:25%"><b class="red">*</b>회원명</td>
                       <td class="userVal" style="width:75%">
-                          <input type="text" name="name" value="" size="40" maxlength="10" />
+                          <input type="text" name="name" value="<%= dto.getName() %>" size="40" maxlength="10" />
                       </td>
                   </tr>
                   <tr>
                       <td class="userTit"><b class="red">*</b> 아이디</td>
                       <td class="userVal">
-                          <input type="text" name="id" value="" maxlength="12" size="40" />
+                          <input type="text" name="id" id="id" value="<%= dto.getId() %>" maxlength="12" size="40" readonly style="color:blue;" />
                           &nbsp;<span class="span1">&nbsp;&nbsp;&nbsp;* 8~12자리로 영문/숫자 조합</span>
-                          <div id="idResult" class="mt-2 mb-2 fw-bold"></div>
                       </td>
                   </tr>
                   <tr>
                       <td class="userTit"><b class="red">*</b>비밀번호</td>
                       <td class="userVal">
-                          <input type="password" name="pw1" value="" size="40" maxlength="12" />
+                          <input type="password" name="pw1" value="<%= dto.getPw() %>" size="40" maxlength="12" />
                           <span class="span1">&nbsp;&nbsp;&nbsp; * 8~12자리로 영문/숫자 조합</span>
                       </td>
                   </tr>
                   <tr>
                       <td class="userTit"><b class="red">*</b>비밀번호 확인</td>
                       <td class="userVal">
-                          <input type="password" name="pw2" value="" size="40" maxlength="12" />
-                          &nbsp;&nbsp;&nbsp;<span id="pwResult" class="fw-bold"></span>
+                          <input type="password" name="pw2" value="<%= dto.getPw() %>" size="40" maxlength="12" />
+                          &nbsp;&nbsp;&nbsp;<span id="pwResult"></span>
                       </td>
                   </tr>
                   <tr>
                       <td class="userTit"><b class="red">*</b>생년월일</td>
-                      <td class="userVal"><input type="date" name="birth" value="" size="40" />
+                      <td class="userVal"><input type="date" name="birth" value="<%= dto.getBirth() %>" size="40" />
                       </td>
                   </tr>
                   <tr>
@@ -176,16 +95,16 @@ function postOpen() {
                               <option value="017">031</option>
                               <option value="018">032</option>
                           </select>
-                          <input type="tel" name="tel2" id="tel2" value="" maxlength="4" size="8" onkeyup="focusMove('tel2','tel3',4);" />
-                          <input type="tel" name="tel3" id="tel3" value="" maxlength="4" size="8" onkeyup="focusMove('tel3','email1',4);" />
+                          <input type="tel" name="tel2" id="tel2" value="<%= phoneArr[1] %>" maxlength="4" size="8" onkeyup="focusMove('tel2','tel3',4);" />
+                          <input type="tel" name="tel3" id="tel3" value="<%= phoneArr[2] %>" maxlength="4" size="8" onkeyup="focusMove('tel3','email1',4);" />
                       </td>
                   </tr>
                   <tr>
                       <td class="userTit"><b class="red">*</b> 이메일</td>
                       <td class="userVal">
-                          <input type="text" name="email1" value="" size="17" />
+                          <input type="text" name="email1" value="<%= emailArr[0] %>" size="17" />
                           <span style="margin-right: 5px;">＠</span>
-                          <input type="text" name="email2" value="" size="17" />
+                          <input type="text" name="email2" value="<%= emailArr[1] %>" size="17" />
                           <select name="email_domain" onchange="inputEmail(this.form);" style="width: 134px;">
                               <option value="직접입력" selected>직접입력</option>
                               <option value="naver.com">naver.com</option>
@@ -199,19 +118,27 @@ function postOpen() {
                   <tr>
                       <td class="userTit"><b class="red">*</b> 주소</td>
                       <td class="userVal">
-                          <input type="text" placeholder="우편번호" name="zip" maxlength="5" value=""
+                          <input type="text" placeholder="우편번호" name="zip" maxlength="5" value="<%= dto.getAdd1() %>"
                               style="background-color: #f1f1f1;" />
                           <a class="btnb py-2" onclick="postOpen();">검색</a>
                           <br><input type="text" style="margin:5px 6px 5px 0; background-color: #f1f1f1;"
-                              name="addr1" maxlength="30" size="40" value="" />
-                          <input type="text" name="addr2" maxlength="20" size="30" value="" />
+                              name="addr1" maxlength="30" size="40" value="<%= dto.getAdd2() %>" />
+                          <input type="text" name="addr2" maxlength="20" size="30" value="<%= dto.getAdd3() %>" />
                       </td>
                   <tr>
+                  <tr>
+                  	<td class="userTit" style="padding-left:40px;"> 가입일</td>
+                  	<td class="userVal"><input type="date" name="regidate" value="<%= dto.getRegidate() %>" size="40" readonly /></td>
+                  </tr>
               </table>
-            <div class="text-center">
+            <div class="text-center" style="display:inline; float:left; margin-left:15%;">
 			<input type="submit" value="확인" class="btnb mt-3 frmbtn" />
 			<input type="reset" value="취소" class="btnw mt-3 frmbtn" />
 			</div>
+		</form> 
+		<form name="delFrm" method="post" action="deleteMember.jsp" onsubmit="return deleteMember(this);" style="display:inline; float:left;" >
+			<input type="submit" class="btnw mt-3 frmbtn dropout" value="회원탈퇴" />
+			<input type="hidden" name="id" value="<%= dto.getId()%>" />
 		</form>
 		</div>
 	</div>

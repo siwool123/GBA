@@ -59,15 +59,15 @@
     <div class="sub1">
         <ul class="sub2 text-center m1">
             <li><a href="../intro/1.jsp">회장인사말</a></li>
-            <li><a href="">협회개요</a></li>
-            <li><a href="">연혁</a></li>
-            <li><a href="">임원소개 및 조직도</a></li>
-            <li><a href="">협회규정</a></li>
+            <li><a href="../intro/2.jsp">협회개요</a></li>
+            <li><a href="../intro/3.jsp">연혁</a></li>
+            <li><a href="../intro/4.jsp">임원소개 및 조직도</a></li>
+            <li><a href="../intro/5.jsp">협회규정</a></li>
         </ul>
         <ul class="sub2 text-center m2">
-            <li><a href="">대회일정</a></li>
-            <li><a href="">대회규정</a></li>
-            <li><a href="">참가신청안내</a></li>
+            <li><a href="../contest/1.jsp">대회일정</a></li>
+            <li><a href="../contest/2.jsp">대회규정</a></li>
+            <li><a href="../contest/3.jsp">참가신청안내</a></li>
         </ul>
         <ul class="sub2 text-center m3">
             <li><a href="">공지사항</a></li>

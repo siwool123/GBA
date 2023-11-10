@@ -7,8 +7,8 @@ request.setCharacterEncoding("UTF-8");
 response.setCharacterEncoding("EUC-KR");
 String id = request.getParameter("id");
 
-MemberDAO dao = new MemberDAO(application);
+MemberDAO dao = new MemberDAO();
 if(dao.checkId(id)==1) System.out.println("이미 존재하는 아이디입니다.");
-else System.out.println("사용가능한 아이디입니다.");
+else System.out.println("사용가능한 아이디입니다."+dao.checkId(id)+" "+id);
 out.write(dao.checkId(id)+"");
 %>

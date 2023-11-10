@@ -28,7 +28,7 @@ dto.setAdd1(add1);
 dto.setAdd2(add2);
 dto.setAdd3(add3);
 
-MemberDAO dao = new MemberDAO(application);
+MemberDAO dao = new MemberDAO();
 result = dao.join(dto);
 dao.close();
 %>

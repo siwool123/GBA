@@ -15,78 +15,6 @@ input, select {border:1px solid #dddddd; height:30px; padding-left:10px; margin-
 .btnb:hover {color:white;}
 </style>
 </head>
-<script>
-//회원가입시 폼값인증
-function jvalidate(frm) {
-	if (frm.name.value == '') {
-        alert("이름을 입력해주세요.");
-        frm.name.focus(); return false;
-    }
-    var textColor1 = window.getComputedStyle(document.getElementById('idResult'), null).getPropertyValue("color");
-    var textColor2 = window.getComputedStyle(document.getElementById('pwResult'), null).getPropertyValue("color");
-    if (textColor1=='rgb(255, 0, 0)') {alert('아이디가 적합하지 않습니다.'); frm.id.focus(); return false;}
-    if (textColor2=='rgb(255, 0, 0)') {alert('비밀번호가 일치하지 않습니다.'); frm.pw2.focus(); return false;}
-    //패스워드 입력 확인
-    if (frm.pw1.value == '') {
-        alert("비밀번호를 입력해주세요."); frm.pw1.focus(); return false;
-    }
-    if (frm.pw1.value.length < 8 || frm.pw1.value.length > 12) {
-        alert("비밀번호는 8~12자 사이만 가능합니다.");
-        frm.pw1.focus(); return false;
-    }
-    if (frm.pw2.value == '') {
-        alert("비밀번호 확인을 위해 재입력해주세요."); frm.pw2.focus(); return false;
-    }
-    if(frm.birth.value=='') {
-		alert("생년월일을 입력해주세요."); frm.birth.focus(); return false;
-	}
-    if(frm.tel1.value==''||frm.tel2.value==''||frm.tel3.value=='') {
-		alert("전화번호를 입력해주세요."); frm.tel1.focus(); return false;
-	}
-	if(frm.email1.value==''||frm.email2.value=='') {
-		alert("이메일 주소를 입력해주세요."); frm.email1.focus(); return false;
-	}
-	if(frm.zip.value==''||frm.addr1.value==''||frm.addr2.value=='') {
-		alert("주소를 입력해주세요."); frm.zip.focus(); return false;
-	}
-}
-function inputEmail(frm) {
-    var choiceDomain = frm.email_domain.value;
-    if (choiceDomain == '') {
-        frm.email1.focus();
-    }
-    else if (choiceDomain == '직접입력') {
-        frm.email2.value = '';
-        frm.email2.readOnly = false;
-        frm.email2.focus();
-    }
-    else {
-        frm.email2.value = choiceDomain;
-        frm.email2.readOnly = true;
-    }
-}
-function focusMove(x, y, z) {
-    if (document.getElementById(x).value.length >= z) {
-        document.getElementById(y).focus();
-    }
-}
-$(function () {
-	$('input[name=pw2]').keyup(function () {
-        if ($(this).val()!=$("input[name=pw1]").val()) {
-			$("#pwResult").text("비밀번호가 일치하지 않습니다.").css("color", "red");
-        }else $("#pwResult").text("비밀번호가 일치합니다.").css("color", "blue");
-    });
-	$('input[name=id]').keyup(function(){
-		let params = {id:$('#id').val()}, id = $(this).val();
-		$.post('idcheck.jsp', params, function(resD){console.log('콜백데이터', resD);
-			if(resD==1) $('#idResult').html('이미 존재하는 아이디입니다.').css('color', 'red');
-			else if(resD==0 && id.length>7 && id.length<13 && isNaN(id.charAt(0))){
-				$('#idResult').html('사용 가능한 아이디 입니다.').css('color', 'blue');
-			}else $('#idResult').html('아이디는 영문소문자로 시작하는 8~12자로 작성해주세요.').css('color', 'red');
-		});
-	});
-});
-</script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 //다음 주소 api
@@ -130,9 +58,9 @@ function postOpen() {
                   <tr>
                       <td class="userTit"><b class="red">*</b> 아이디</td>
                       <td class="userVal">
-                          <input type="text" name="id" value="" maxlength="12" size="40" />
+                          <input type="text" name="id" id="id" value="" maxlength="12" size="40" />
                           &nbsp;<span class="span1">&nbsp;&nbsp;&nbsp;* 8~12자리로 영문/숫자 조합</span>
-                          <div id="idResult" class="mt-2 mb-2 fw-bold"></div>
+                          <div id="idResult" class="mt-2 mb-2"></div>
                       </td>
                   </tr>
                   <tr>
@@ -146,7 +74,7 @@ function postOpen() {
                       <td class="userTit"><b class="red">*</b>비밀번호 확인</td>
                       <td class="userVal">
                           <input type="password" name="pw2" value="" size="40" maxlength="12" />
-                          &nbsp;&nbsp;&nbsp;<span id="pwResult" class="fw-bold"></span>
+                          &nbsp;&nbsp;&nbsp;<span id="pwResult"></span>
                       </td>
                   </tr>
                   <tr>

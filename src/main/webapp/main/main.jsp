@@ -63,7 +63,7 @@
 			<b style="font-size:18px; margin-right:20px;"> 대회일정 </b> <a href="" style="float:right;">more +</a>
 			</div>
 			<div class="crop" style="height: 240px; overflow: hidden;">
-			<iframe id="myframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&showTitle=0&showTz=0&showNav=1&showCalendars=1&showPrint=0&src=ZDVjYTI1Yzk5MjQ1NWU5OGQ4YzgyMjA0MjQ0ZDM0OGIwZmFhNjhiY2IwODkzZDNlNzUyYmFjMzMxNzE2ZTM1Y0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23F6BF26&color=%23D50000" width="100%" height="267" frameborder="0" scrolling="no"></iframe>
+			<iframe id="myframe" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FSeoul&showTitle=0&showNav=1&showPrint=0&showTabs=1&showCalendars=1&showTz=1&src=Z2JhZ3dhbmxpamFAZ21haWwuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=a28uc291dGhfa29yZWEjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%2333B679&color=%230B8043" style="border-width:0" width="100%" height="267" frameborder="0" scrolling="no"></iframe>
 			</div>
 		</div>
 		</div>
