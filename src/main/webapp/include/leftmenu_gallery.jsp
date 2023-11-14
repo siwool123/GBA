@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<div class="lefttop">대회안내</div>
+<div class="lefttop">
+갤러리
+</div>
 <ul class="leftmenu">
-    <li><a href="../contest/1.jsp">대회일정 <i class="fa fa-angle-right"></i></a></li>
-    <li><a href="../contest/2.jsp">대회규정 <i class="fa fa-angle-right"></i></a></li>
-    <li><a href="../contest/3.jsp">참가신청안내 <i class="fa fa-angle-right"></i></a></li>
+	<li><a href="../community/list.jsp?tname1=photogallery">포토갤러리<i class="fa fa-angle-right"></i></a></li>
+    <li><a href="../community/list.jsp?tname1=videogallery">영상갤러리 <i class="fa fa-angle-right"></i></a></li>
 </ul>
 <div class="bankL mt-4">
 	<div>협회입금계좌 <img src="../images/bank_y.png" alt="농협" style="width:90px;" /> </div>

@@ -70,13 +70,13 @@
             <li><a href="../contest/3.jsp">참가신청안내</a></li>
         </ul>
         <ul class="sub2 text-center m3">
-            <li><a href="">공지사항</a></li>
-            <li><a href="">자유게시판</a></li>
-            <li><a href="">Q & A</a></li>
+            <li><a href="../community/list.jsp?tname=notice">공지사항</a></li>
+            <li><a href="../community/list.jsp?tname=freeboard">자유게시판</a></li>
+            <li><a href="../community/list.jsp?tname=qna">Q & A</a></li>
         </ul>
         <ul class="sub2 text-center m4">
-            <li><a href="">포토갤러리</a></li>
-            <li><a href="">영상갤러리</a></li>
+            <li><a href="../community/list.jsp?tname=photogallery">포토갤러리</a></li>
+            <li><a href="../community/list.jsp?tname=videogallery">영상갤러리</a></li>
         </ul>
         <ul class="sub2 text-center m5">
             <li><a href="">협회운영자료</a></li>

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <div class="lefttop">협회소개</div>
 <ul class="leftmenu">
     <li><a href="../intro/1.jsp">회장인사말 <i class="fa fa-angle-right"></i></a></li>

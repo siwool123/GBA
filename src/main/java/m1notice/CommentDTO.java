@@ -3,39 +3,47 @@ package m1notice;
 import java.sql.Date;
 
 public class CommentDTO {
-	private int idx;
-	private int board_idx;
-	private String id;
-	private Date commentdate;
+	private int cidx;
+	private int bidx;
+	private String name;
+	private Date postdate;
 	private String content;
 	private int likecnt;
 	private int star;
 	private String ofile;
 	private String sfile;
+	private String tname;
+	public boolean isimage=false;
 	
-	public int getIdx() {
-		return idx;
+	public String getTname() {
+		return tname;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+	public void setTname(String tname) {
+		this.tname = tname;
 	}
-	public int getBoard_idx() {
-		return board_idx;
+	public int getCidx() {
+		return cidx;
 	}
-	public void setBoard_idx(int board_idx) {
-		this.board_idx = board_idx;
+	public void setCidx(int cidx) {
+		this.cidx = cidx;
 	}
-	public String getId() {
-		return id;
+	public int getBidx() {
+		return bidx;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setBidx(int bidx) {
+		this.bidx = bidx;
 	}
-	public Date getCommentdate() {
-		return commentdate;
+	public String getName() {
+		return name;
 	}
-	public void setCommentdate(Date commentdate) {
-		this.commentdate = commentdate;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Date getPostdate() {
+		return postdate;
+	}
+	public void setPostdate(Date postdate) {
+		this.postdate = postdate;
 	}
 	public String getContent() {
 		return content;

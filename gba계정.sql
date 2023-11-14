@@ -3,7 +3,7 @@ create table member(
     pw varchar2(30) not null,
     name varchar2(30) not null,
     email varchar2(60) not null,
-    emailok varchar2(3) check(emailok in ('y', 'n')),
+    birth varchar2(30) not null,
     phone varchar2(30) not null,
     add1 number(10),
     add2 varchar2(100),
@@ -19,3 +19,11 @@ commit;
 alter table member add birth varchar(30);
 commit;
 select * from member where id='siwool123';
+select * from member where id='siwool321';
+create sequence seq_board
+    increment by 1
+    start with 2
+    minvalue 2
+    nomaxvalue
+    nocycle
+    nocache;

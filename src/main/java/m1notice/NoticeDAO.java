@@ -11,8 +11,8 @@ import jakarta.servlet.ServletContext;
 
 public class NoticeDAO extends JDBConnect {
 
-	public NoticeDAO(ServletContext application) {
-		super(application);
+	public NoticeDAO() {
+		super();
 	}
 
 	//게시물 개수 카운트하여 int형으로 반환하는메소드
@@ -38,7 +38,7 @@ public class NoticeDAO extends JDBConnect {
 		List<NoticeDTO> bbs = new Vector<NoticeDTO>(); //벡터는 리스트의 일종. ArrayList와 유사
 		String sql = "SELECT * FROM "+map.get("tname");
 		if(map.get("searchWord")!=null) sql += " WHERE "+map.get("searchField")+" LIKE '%"+map.get("searchWord")+"%'";
-		sql += " ORDER BY idx DESC";
+		sql += " ORDER BY notice DESC, idx DESC";
 		try {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
@@ -48,13 +48,13 @@ public class NoticeDAO extends JDBConnect {
 				dto.setIdx(rs.getInt(1));
 				dto.setTitle(rs.getString(2));
 				dto.setContent(rs.getString(3));
-				dto.setId(rs.getString(4));
+				dto.setName(rs.getString(4));
 				dto.setPostdate(rs.getDate(5));
 				dto.setVisitcnt(rs.getInt(6));
 				dto.setOfile(rs.getString(7));
 				dto.setSfile(rs.getString(8));
-				dto.setDowncnt(rs.getInt(9));
 				dto.setLikecnt(rs.getInt(10));
+				dto.setNotice(rs.getInt(9));
 				
 				bbs.add(dto); //리스트에 dto추가
 			}
@@ -66,16 +66,17 @@ public class NoticeDAO extends JDBConnect {
 	}
 
 //게시물 입력위한 메소드. 폼값이 저장된 dto객체를 인수로 받는다.
-	public int insertWrite(NoticeDTO dto) {
+	public int insert(NoticeDTO dto) {
 		int result=0;
 		try {
-			String sql = "INSERT INTO "+dto.getTname()+" VALUES (seq_notice.NEXTVAL, ?, ?, ?, sysdate, 0, ?, ?, 0, 0)";
+			String sql = "INSERT INTO "+dto.getTname()+" (title, content, name, ofile, sfile, notice) VALUES (?, ?, ?, ?, ?, ?)";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
-			psmt.setString(3, dto.getId());
+			psmt.setString(3, dto.getName());
 			psmt.setString(4, dto.getOfile());
 			psmt.setString(5, dto.getSfile());
+			psmt.setInt(6, dto.getNotice());
 			result = psmt.executeUpdate();
 			
 		}catch(Exception e) {
@@ -85,10 +86,9 @@ public class NoticeDAO extends JDBConnect {
 		return result;
 	}
 	
-	public NoticeDTO selectView(int idx, String tname) {
+	public NoticeDTO view(int idx, String tname) {
 		NoticeDTO dto = new NoticeDTO();
-		String sql = "SELECT N.*, M.name FROM member M INNER JOIN "+tname+" N ON M.id=N.id WHERE N.idx=?";
-		
+		String sql = "SELECT * FROM "+tname+" WHERE idx=?";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, idx);
@@ -100,14 +100,13 @@ public class NoticeDAO extends JDBConnect {
 				dto.setIdx(rs.getInt(1));
 				dto.setTitle(rs.getString(2));
 				dto.setContent(rs.getString(3));
-				dto.setId(rs.getString(4));
+				dto.setName(rs.getString(4));
 				dto.setPostdate(rs.getDate(5));
 				dto.setVisitcnt(rs.getInt(6));
 				dto.setOfile(rs.getString(7));
 				dto.setSfile(rs.getString(8));
-				dto.setDowncnt(rs.getInt(9));
-				dto.setLikecnt(rs.getInt(10));
-				dto.setName(rs.getString(11));
+				dto.setLikecnt(rs.getInt(9));
+				dto.setNotice(rs.getInt(10));
 			}
 		}catch(Exception e) {
 			System.out.println("게시물 상세보기 중 예외발생");
@@ -116,29 +115,30 @@ public class NoticeDAO extends JDBConnect {
 		return dto;
 	}
 	
-	public void updateVisitcnt(int idx, String tname) {
-		String sql = "UPDATE "+tname+" SET visitcnt=visitcnt+1 WHERE idx=?";
+	public void plusCnt(int idx, String tname, String column) {
+		String sql = "UPDATE "+tname+" SET "+column+"="+column+"+1 WHERE idx=?";
 		try {
 			psmt = con.prepareStatement(sql);
 			psmt.setInt(1, idx);
 			psmt.executeQuery();
 		}catch(Exception e) {
-			System.out.println("게시물 조회수 증가 중 예외발생");
+			System.out.println("게시물 조회수 or 좋아요수 증가 중 예외발생");
 			e.printStackTrace();
 		}
 	}
 
-//게시물 수정하기 > 특정일련번호에 해당하는 게시물 수정
-	public int updateEdit(NoticeDTO dto) {
+	//게시물 수정하기 > 특정일련번호에 해당하는 게시물 수정
+	public int edit(NoticeDTO dto) {
 		int result=0;
 		try {
-			String sql = "UPDATE "+dto.getTname()+" SET title=?, content=?, ofile=?, sfile=? WHERE idx=?";
+			String sql = "UPDATE "+dto.getTname()+" SET title=?, content=?, ofile=?, sfile=?, notice=? WHERE idx=?";
 			psmt = con.prepareStatement(sql);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
 			psmt.setString(3, dto.getOfile());
 			psmt.setString(4, dto.getSfile());
-			psmt.setInt(5, dto.getIdx());
+			psmt.setInt(5, dto.getNotice());
+			psmt.setInt(6, dto.getIdx());
 			result = psmt.executeUpdate();
 		}catch(Exception e) {
 			System.out.println("게시물 수정 중 예외발생");
@@ -147,7 +147,7 @@ public class NoticeDAO extends JDBConnect {
 		return result;
 	}
 	
-	public int deletePost(NoticeDTO dto) {
+	public int delete(NoticeDTO dto) {
 		int result=0;
 		try {
 			String sql = "DELETE FROM "+dto.getTname()+" WHERE idx=?";
@@ -164,28 +164,28 @@ public class NoticeDAO extends JDBConnect {
 	public List<NoticeDTO> selectListPage(Map<String, Object> map) {
 		List<NoticeDTO> bbs = new Vector<NoticeDTO>(); 
 		/* 검색조선일치하는게시물얻어온후 각페이지에 출력할 쿼리작성 */
-		String sql = "SELECT * FROM (SELECT T1.*, ROWNUM R FROM (SELECT * FROM "+map.get("tname");
+		String sql = "SELECT * FROM "+map.get("tname");
 		if(map.get("searchWord")!=null) {
 			sql += " WHERE " + map.get("searchField")+ " LIKE '%" + map.get("searchWord") + "%'";
 		}
-		sql += " ORDER BY idx DESC) T1) WHERE R BETWEEN ? AND ?";
+		sql += " ORDER BY notice DESC, idx DESC LIMIT ?, ?";
 		try {
 			psmt = con.prepareStatement(sql);
-			psmt.setString(1, map.get("start").toString());
-			psmt.setString(2, map.get("end").toString());
+			psmt.setInt(1, Integer.parseInt(map.get("start").toString()) );
+			psmt.setInt(2, Integer.parseInt(map.get("pageSize").toString()) );
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				NoticeDTO dto = new NoticeDTO();
 				dto.setIdx(rs.getInt(1));
 				dto.setTitle(rs.getString(2));
 				dto.setContent(rs.getString(3));
-				dto.setId(rs.getString(4));
+				dto.setName(rs.getString(4));
 				dto.setPostdate(rs.getDate(5));
 				dto.setVisitcnt(rs.getInt(6));
 				dto.setOfile(rs.getString(7));
 				dto.setSfile(rs.getString(8));
-				dto.setDowncnt(rs.getInt(9));
-				dto.setLikecnt(rs.getInt(10));
+				dto.setLikecnt(rs.getInt(9));
+				dto.setNotice(rs.getInt(10));
 				bbs.add(dto); //리스트에 dto추가
 			}
 		}catch(Exception e) {
@@ -239,34 +239,5 @@ public class NoticeDAO extends JDBConnect {
 			e.printStackTrace();
 		}
 		return maxmin;
-	}
-	
-	public int downcntPlus(int idx, String tname) {
-		int result = 0;
-		String sql = "UPDATE "+tname+" SET downcnt=downcnt+1 WHERE idx="+idx;
-		String sql2 = "UPDATE fileb SET downcnt=downcnt+1 WHERE bidx="+idx;
-		try {
-			stmt = con.createStatement();
-			result = stmt.executeUpdate(sql);
-			int result2 = stmt.executeUpdate(sql2);
-		}catch(Exception e) {
-			System.out.println("게시물 다운로드수 증가 중 예외발생");
-			e.toString();
-		}
-		return result;
-	}
-	
-	public int updateLikecnt(int idx, String tname) {
-		int result = 0;
-		String sql = "UPDATE "+tname+" SET likecnt=likecnt+1 WHERE idx=?";
-		try {
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, idx);
-			result = psmt.executeUpdate();
-		}catch(Exception e) {
-			System.out.println("좋아요 수 증가 중 예외발생");
-			e.printStackTrace();
-		}
-		return result;
 	}
 }

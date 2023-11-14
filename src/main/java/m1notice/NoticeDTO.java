@@ -8,16 +8,21 @@ public class NoticeDTO {
 	private int idx;
 	private String title;
 	private String content;
-	private String id;
+	private String name;
 	private Date postdate;
 	private int visitcnt;
 	private String ofile;
 	private String sfile;
-	private int downcnt;
-	private String name;
 	private int likecnt;
+	private int notice;
 	private String tname;
 	
+	public int getNotice() {
+		return notice;
+	}
+	public void setNotice(int notice) {
+		this.notice = notice;
+	}
 	public int getIdx() {
 		return idx;
 	}
@@ -35,12 +40,6 @@ public class NoticeDTO {
 	}
 	public void setContent(String content) {
 		this.content = content;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	public Date getPostdate() {
 		return postdate;
@@ -65,12 +64,6 @@ public class NoticeDTO {
 	}
 	public void setSfile(String sfile) {
 		this.sfile = sfile;
-	}
-	public int getDowncnt() {
-		return downcnt;
-	}
-	public void setDowncnt(int downcnt) {
-		this.downcnt = downcnt;
 	}
 	public String getName() {
 		return name;

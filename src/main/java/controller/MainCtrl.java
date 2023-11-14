@@ -20,21 +20,26 @@ public class MainCtrl extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		//DB연결
-		NoticeDAO dao = new NoticeDAO(getServletContext());
+		NoticeDAO dao = new NoticeDAO();
 		Map<String, Object> map = new HashMap<>();
 		map.put("start", 1);
-		map.put("end", 4);
+		map.put("end", 6);
 		
-		//공지사항 최근게시물4개추출
+		//공지사항 최근게시물 6개추출
 		map.put("tname", "notice");
 		List<NoticeDTO> noticeL = dao.selectListPage(map);
 		
-		//자게 최근게시물 4개추출
+		//자게 최근게시물 6개추출
 		map.put("tname", "freeboard");
 		List<NoticeDTO> freeboardL = dao.selectListPage(map);
 		
+		//자게 최근게시물 6개추출
+		map.put("tname", "clubboard");
+		List<NoticeDTO> clubboard = dao.selectListPage(map);
+		
 		req.setAttribute("noticeL", noticeL);
 		req.setAttribute("freeboardL", freeboardL);
+		req.setAttribute("clubboard", clubboard);
 		
 		req.getRequestDispatcher("../main/main.jsp").forward(req, resp);
 	}
